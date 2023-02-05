@@ -1,0 +1,190 @@
+body {
+    font-family: sans-serif;
+    margin-left: 0;
+    margin-right: 0;
+}
+#circleImg {
+    border-radius: 50%;
+    height: 250px;
+    width: 250px;
+}
+.flex-progress{
+    padding: inherit;
+    margin: inherit;
+    text-align: left;
+}
+.flex-progress progress {
+    width: 100%;
+    height: 30px;
+}
+.flex-education table {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 100%;
+    font-size: 15;
+}
+.flex-education td {
+    font-size: 15pt;
+}
+
+
+/*
+------ NAVBAR ------
+ */
+ .mainNav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+ }
+
+.mainNav ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    list-style-type: none;
+
+    border-bottom-style: solid;
+    border-bottom-color: lightgray;
+    border-bottom-width: 0.6mm;
+    
+    border-top-style: solid;
+    border-top-color: rgb(153, 28, 160);
+    border-top-width: 1mm;
+
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.mainNav a {
+    display: flex;
+    color: gray;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.mainNav li a:hover:not(.active) {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+.active a {
+    color:  rgb(153, 28, 160);
+}
+
+
+/*
+------ Main Flex Division ------
+ */
+
+ .flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 53px;
+  }
+.flex-child1 {
+    border-right-width: 0.5px;
+    border-right-style: solid;
+    border-right-color: black;
+    
+    margin-top: 20pt;
+    margin-bottom: 20pt;
+    padding: 10pt;
+
+    text-align: center;
+}
+.flex-child2 {
+    text-align: flex-start;
+    margin-top: 20pt;
+    margin-bottom: 20pt;
+    padding: 10pt;
+    max-width: 600px;
+    flex: 1 1 400px;
+}
+.flex-container a {
+    display: inline-flex;
+    color: blueviolet;
+    text-align: center;
+    padding: 2px 2px;
+    text-decoration: none;
+}
+.flex-container a:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+    border-color: black;
+    border-style: dotted;
+    border-width: 1px;
+}
+
+
+/*
+---------- Footer ----------
+ */
+
+.footer {
+    border-top-style: solid;
+    border-top-color: lightgray;
+    border-top-width: 0.6mm;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+}
+
+
+/* ---------------------------- */
+
+@media screen and (max-width: 785px) {
+    .flex-container {
+        flex-direction: column;
+    }
+    .flex-child1 {
+        border-right-width: 0px;
+        border-bottom-width: 0.5px;
+        border-bottom-style: solid;
+        border-bottom-color: black;
+
+        margin-top: 0%;
+        margin-bottom: 0%;
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+    .flex-child2 {
+        align-self: center;
+        width: 90%;
+        padding-top: 0px;
+        padding-bottom: 40px;
+        padding-left: 40px;
+        padding-right: 40px;
+        margin-top: 0px;
+        margin-left: 10px;
+        margin-right: 10px;
+        text-align: center;
+    }
+    .flex-child2 td {
+        vertical-align: top;
+    }
+}
+@media screen and (max-width: 455px) {
+    .mainNav ul {
+        flex-direction: column;
+        border-bottom-width: 0.6mm;
+        border-bottom-color: gray;
+    }
+    .mainNav li {
+        border-bottom-style: solid;
+        border-bottom-color: lightgray;
+        border-bottom-width: 0.6mm;
+    }
+    .mainNav li:last-child {
+        border-bottom-style: solid;
+        border-bottom-color: lightgray;
+        border-bottom-width: 0mm;
+    }
+    .mainNav {
+        position: relative;
+     }
+}
+

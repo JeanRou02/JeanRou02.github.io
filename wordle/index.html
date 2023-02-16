@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8" />
+    	<meta name="viewport" content="width=device-width" />
+    	<title>Wordle</title>
+    	<link rel="stylesheet" href="./style.css" />
+  	</head>
+  	<body>
+		<div class="header">
+			<div class="header_left"></div>
+			<div class="header_center">
+				<b>Wordle</b>
+			</div>
+			<div class="header_right">
+				<button onclick="themeToggle()">&#9681;</button>
+				<button onclick="hintToggle()">&#63;</button>
+				<button onclick="infoToggle()">&#9432;</button>
+			</div>
+		</div>
+		<div class="contentContainer" id="contentContainer">
+			<div class="mainContentContainer" id="mainContentContainer">
+				<div id="board-container">
+					<div id="board">
+					</div>
+					<div id="hiddenWin"><img src="https://res.cloudinary.com/mkf/image/upload/v1675467141/ENSF-381/labs/congrats_fkscna.gif" alt="Congartulations!">
+					</div>
+				</div>
+				<div class="startButton-container">
+					<button onclick="startOver()" class="startButton" id="startButton">Start Over</button>
+				</div>
+				<div class="keyboardContainer">
+					<div class="keyboard"></div>
+				</div>
+			</div>
+			<div id="infoContainer">
+				<div id="info"></div>
+			</div>
+		</div>
+		<div class="footerContainer">
+			<div id="hintContainer" class="hintContainer">
+				<span id="hint"></span>
+			</div>
+			<div id="winBarContainer" class="winBarContainer">
+				<span id="winBar">You Won!</span>
+			</div>
+			<div id="failedBarContainer" class="failedBarContainer">
+				<span id="failedBar">You Failed!</span>
+			</div>
+			<div class="footer">
+				<span>&#169; Jean-Nicolas Rouette 2023</span>
+			</div>
+		</div>
+		<script src="./wordle.js"></script>
+  	</body>
+</html>

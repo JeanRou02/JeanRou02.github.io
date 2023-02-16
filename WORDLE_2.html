@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8" />
+    	<meta name="viewport" content="width=device-width" />
+    	<title>Wordle</title>
+    	<style>
+			body {
+			  margin: 0;
+			  padding: 0;
+			  font-family: Arial, Helvetica, sans-serif;
+			  background-color: white;
+			  color: black;
+			  min-height:100vh; 
+			  display:flex; 
+			  flex-direction:column;
+			}
+			
+			/*-------------------------------
+			-------------------------------*/
+			
+			.hintContainer {
+			  display: none;
+			}
+			.showHint{
+			  display: block;
+			  justify-content: center;
+			  align-content: center;
+			  text-align: center;
+			  background-color: rgb(255, 241, 222);
+			  padding: 20px;
+			}
+			
+			/*-------------------------------
+			-------------------------------*/
+			
+			.winBarContainer {
+			  display: none;
+			}
+			.showWinBar {
+			  display: block;
+			  justify-content: center;
+			  align-content: center;
+			  text-align: center;
+			  background-color: rgb(237, 236, 236);
+			  padding: 20px;
+			}
+			.dark-mode .showWinBar {
+			  background-color: rgb(70, 70, 70);
+			}
+			#hideBoard {
+			  display: none;
+			}
+			#hiddenWin {
+			  display: none;
+			}
+			#shownWin {
+			  display: flex;
+			  justify-content: center;
+			  align-content: center;
+			}
+			#shownWin img{
+			  width:70%;
+			  height:70%;
+			}
+			.failedBarContainer {
+			  display: none;
+			}
+			.showFailedBar {
+			  display: block;
+			  justify-content: center;
+			  align-content: center;
+			  text-align: center;
+			  background-color: rgb(253, 125, 125);
+			  padding: 20px;
+			}
+			.dark-mode .showFailedBar {
+			  background-color: rgb(104, 0, 0);
+			}
+			
+			/*-------------------------------
+			-------------------------------*/
+			
+			.dark-mode {
+			  background-color: rgb(5, 5, 5);
+			  color: rgb(200, 200, 200);
+			}
+			.dark-mode .square {
+			  border: 2px solid rgb(200, 200, 200);
+			}
+			.dark-mode .header {
+			  border-top-color: rgb(0, 50, 0);
+			}
+			.dark-mode .startButton {
+			  background-color: rgb(0, 50, 0);
+			  color: rgb(200, 200, 200);
+			}
+			.dark-mode .header_right button:hover {
+			  background-color: rgb(40, 40, 40);
+			}
+			.dark-mode .showHint{
+			  background-color: rgba(255, 149, 0, 0.112);
+			}
+			.dark-mode .correctChar{
+			  background-color: rgb(153, 133, 8);
+			}
+			.dark-mode .correctLocation{
+			  background-color: rgb(17, 116, 17);
+			}
+			.dark-mode .incorrectChar{
+			  background-color: rgb(82, 82, 82);
+			}
+			/*-------------------------------
+			-------------------------------*/
+			.headerContainer {
+			  display: flex;
+			  flex-grow: 2;
+			  flex-shrink: 0;
+			}
+			.header {
+			  display: flex;
+			  flex-direction: row;
+			  align-items: center;
+			  justify-content: flex-start;
+			  flex-wrap: nowrap;
+			  height: auto;
+			  padding: 0px 30px;
+			  background-color: inherit;
+			  border-top-style: solid;
+			  border-bottom-style: solid;
+			  border-top-width: 5px;
+			  border-bottom-width: 2px;
+			  border-top-color: rgb(0, 128, 0);
+			  
+			}
+			.header_left {
+			  flex: 1;
+			}
+			.header_center {
+			  padding: 20px;
+			  font-size: 2rem;
+			  text-align: center;
+			  flex: 4;
+			  cursor: default;
+			}
+			.header_right {
+			  display: flex;
+			  align-items: center;
+			  text-align: right;
+			  justify-content: space-between;
+			  font-size: 1.5rem;
+			  flex: 1;
+			}
+			.header_right button {
+			  width: 100%;
+			  height: 84px;
+			  padding: 0px 0px;
+			  border: none;
+			  background-color: inherit;
+			  text-align: center;
+			  text-decoration: none;
+			  display: inline-block;
+			  cursor: pointer;
+			  font-size: 1.2rem;
+			  color: inherit;
+			}
+			.header_right button:hover {
+			  background-color: rgb(229, 229, 229);
+			}
+			
+			/*-------------------------------
+			-------------------------------*/
+			
+			.mainContentContainer .showWinCenter{
+			  display: none;
+			  flex-direction: column;
+			  flex: 1;
+			}
+			
+			/*-------------------------------
+			-------------------------------*/
+			
+			.mainContentContainer {
+			  display: flex;
+			  flex-direction: column;
+			  flex: 1;
+			}
+			.contentContainer {
+			  flex-grow: 150;
+			  display: flex;
+			  flex-direction: row;
+			  justify-content: center;
+			  flex-wrap: nowrap;
+			}
+			.info-tab {
+			  display: flex;
+			  flex: 1;
+			  align-items: flex-start;
+			  justify-content: flex-start;
+			  flex-wrap: nowrap;
+			  height: auto;
+			  border-left: 1px solid;
+			  color: inherit;
+			}
+			.info-tab #info{
+			  padding: 20px;
+			}
+			#board-container {
+			  display: flex;
+			  justify-content: center;
+			  align-items: center;
+			  overflow: hidden;
+			  padding-top: 20px;
+			}
+			#board {
+			  display: grid;
+			  grid-template-columns: repeat(4, 1fr);
+			  grid-gap: 2px;
+			  padding: 10px;
+			  box-sizing: border-box;
+			}
+			.square {
+			  border: 2px solid black;
+			  min-width: 70px;
+			  min-height: 70px;
+			  border-radius: 2px;
+			  text-align: center;
+			  font-size: 3.5rem;
+			}
+			.correctChar{
+			  background-color: rgb(230, 202, 19);
+			}
+			.correctLocation{
+			  background-color: rgb(10, 193, 10);
+			}
+			.incorrectChar{
+			  background-color: rgb(150, 150, 150);
+			}
+			
+			/*-------------------------------
+			-------------------------------*/
+			
+			.startButton-container {
+			  padding-top: 10px;
+			  display: flex;
+			  width: 100%;
+			  align-items: center;
+			  justify-content: center;
+			}
+			.startButton {
+			  background-color: #4CAF50;
+			  border: none;
+			  color: white;
+			  padding: 10px 30px;
+			  text-align: center;
+			  text-decoration: none;
+			  display: inline-block;
+			  font-size: 16px;
+			  margin: 4px 2px;
+			  cursor: pointer;
+			  border-radius: 5px;
+			  font-size: 1.2rem;
+			}
+			
+			/*-------------------------------
+			-------------------------------*/
+			
+			.footerContainer {
+			  flex-grow: 1;
+			  flex-shrink: 0;
+			  justify-content: center;
+			  align-content: center;
+			}
+			.footer {
+			  background-color: inherit;
+			  border-top-style: solid;
+			  /*
+			  position: fixed;
+			  left: 0;
+			  bottom: 0;
+			  */
+			
+			  border-top-width: 2px;
+			  text-align: center;
+			  padding: 8px;
+			}
+			
+			/*-------------------------------
+			-------------------------------*/
+			
+			#liStyle {
+			  list-style-type: circle;
+			  padding-bottom: 10px;
+			}
+			#h3Style {
+			  padding-left: 40px;
+			}
+			
+			/*-------------------------------
+			-------------------------------*/
+			
+			.keyboardContainer {
+			  margin-top: 10px;
+			  width: 100%;
+			  display: flex;
+			  align-items: center;
+			  justify-content: center;
+			}
+			.keyboard {
+			  width: 510px;
+			  display: flex;
+			  flex-wrap: wrap;
+			}
+			.keyboard button {
+			  width: 43px;
+			  height: 58px;
+			  border-radius: 4px;
+			  border: none;
+			  background-color: rgb(229, 229, 229);
+			  margin: 4px;
+			  font-size: 1.2rem;
+			  color: inherit;
+			}
+			.keyboard button:nth-child(20),
+			.keyboard button:nth-child(28) {
+			  width: 68px;
+			}
+			.keyboard button:nth-child(11) {
+			  margin-left: 30px;
+			}
+			.keyboard button.correctLocation {
+			  background-color: rgb(10, 193, 10);
+			}
+			.keyboard button.correctChar {
+			  background-color: rgb(230, 202, 19);
+			}
+			.keyboard button.incorrectChar {
+			  background-color: rgb(150, 150, 150);
+			}
+			.dark-mode .keyboard button {
+			  background-color: rgb(35, 35, 35);
+			}
+			.dark-mode .keyboard button.correctLocation {
+			  background-color: rgb(17, 116, 17);
+			}
+			.dark-mode .keyboard button.correctChar {
+			  background-color: rgb(153, 133, 8);
+			}
+			.dark-mode .keyboard button.incorrectChar {
+			  background-color: rgb(82, 82, 82);
+			}
+			
+			/*-------------------------------
+			-------------------------------*/
+			
+			@media screen and (max-width: 850px) {
+			  .header_left {   
+				flex: 2;
+			  }
+			  .header_right {
+				flex: 2;
+			  }
+			}
+			@media screen and (max-width: 500px) {
+			  .header {
+				padding: 0px 10px;
+			  }
+			  .header_left {   
+				flex: 0;
+			  }
+			  .header_right button{
+				padding: 0px 10px;
+			  }
+			  .header_center {
+				text-align: left;
+				padding-left: 5px;
+			  }
+			  #board-container {
+				padding-top: 0px;
+			  }
+			  #board {
+				grid-gap: 1px;
+			  }
+			  .square {
+				min-width: 60px;
+				min-height: 60px;
+				font-size: 3rem;
+			  }
+			  .startButton-container {
+				padding-top: 0px;
+			  }
+			  .contentContainer {
+				flex-direction: column;
+			  }
+			  .mainContentContainer {
+				padding-bottom: 10px;
+			  }
+			  .info-tab {
+				border-left-width: 0px;
+				border-top-style: solid;
+				border-bottom-width: 2px;
+			  }
+			  .keyboard {
+				width: 350px;
+				padding: 0px;
+			  }
+			  .keyboard button {
+				width: 31px;
+				height: 45px;
+				border-radius: 6px;
+				margin: 2px;
+			  }
+			  .keyboard button:nth-child(20),
+			  .keyboard button:nth-child(28) {
+				width: 48px;
+				font-size: 0.9rem;
+			  }
+			  .keyboard button:nth-child(11) {
+				margin-left: 17px;
+			  }
+			}
+			@media screen and (max-width: 355px) {
+			  .header_right button{
+				padding: 0px 5px;
+			  }
+			  #board-container {
+				padding-top: 0px;
+			  }
+			  .square {
+				min-width: 55px;
+				min-height: 55px;
+				font-size: 2.7rem;
+			  }
+			  .keyboard {
+				width: 300px;
+				padding: 0px;
+			  }
+			  .keyboard button {
+				width: 26px;
+				height: 40px;
+				border-radius: 6px;
+				margin: 2px;
+			  }
+			  .keyboard button:nth-child(20),
+			  .keyboard button:nth-child(28) {
+				width: 41px;
+				font-size: 0.9rem;
+			  }
+			  .keyboard button:nth-child(11) {
+				margin-left: 15px;
+			  }
+			}
+		</style>
+  	</head>
+  	<body>
+		<div class="header">
+			<div class="header_left"></div>
+			<div class="header_center">
+				<b>Wordle</b>
+			</div>
+			<div class="header_right">
+				<button onclick="themeToggle()">&#9681;</button>
+				<button onclick="hintToggle()">&#63;</button>
+				<button onclick="infoToggle()">&#9432;</button>
+			</div>
+		</div>
+		<div class="contentContainer" id="contentContainer">
+			<div class="mainContentContainer" id="mainContentContainer">
+				<div id="board-container">
+					<div id="board">
+					</div>
+					<div id="hiddenWin"><img src="https://res.cloudinary.com/mkf/image/upload/v1675467141/ENSF-381/labs/congrats_fkscna.gif" alt="Congartulations!">
+					</div>
+				</div>
+				<div class="startButton-container">
+					<button onclick="startOver()" class="startButton" id="startButton">Start Over</button>
+				</div>
+				<div class="keyboardContainer">
+					<div class="keyboard"></div>
+				</div>
+			</div>
+			<div id="infoContainer">
+				<div id="info"></div>
+			</div>
+		</div>
+		<div class="footerContainer">
+			<div id="hintContainer" class="hintContainer">
+				<span id="hint"></span>
+			</div>
+			<div id="winBarContainer" class="winBarContainer">
+				<span id="winBar">You Won!</span>
+			</div>
+			<div id="failedBarContainer" class="failedBarContainer">
+				<span id="failedBar">You Failed!</span>
+			</div>
+			<div class="footer">
+				<span>&#169; Jean-Nicolas Rouette 2023</span>
+			</div>
+		</div>
+		<script>
+			let number = Number.parseInt(Math.random() * 20);
+			
+			document.addEventListener("DOMContentLoaded", () => {
+			
+				createSquares();
+			
+				const startButton = document.getElementById("startButton");
+				(async () => {
+					disableButton(startButton);
+					startButton.innerHTML = "Loading...";
+					word = await getWordAndHint(number);
+					startButton.innerHTML = "Start Over";
+					enableButton(startButton);
+				})()
+			
+				function createSquares() {
+					const gameBoard = document.getElementById("board");
+					for (let index = 0; index < 16; index++) {
+						let square = document.createElement("div");
+						square.classList.add("square");
+						square.setAttribute("id", "box" + index);
+						gameBoard.appendChild(square);
+					}
+					console.log("Grid Created");
+				}
+			})
+			
+			async function getWordAndHint(num) {
+				let obj;
+				const res = await fetch("https://api.masoudkf.com/v1/wordle", {
+					headers: {
+					"x-api-key": "sw0Tr2othT1AyTQtNDUE06LqMckbTiKWaVYhuirv",
+					}
+				});
+				obj = await res.json();
+				const wordAndHint = [obj.dictionary[num].word, obj.dictionary[num].hint];
+				console.log("Word is: ", wordAndHint[0]);
+				console.log("Hint is: ", wordAndHint[1]);
+				let word = wordAndHint[0];
+				document.getElementById("hint").innerHTML = "Hint: " + wordAndHint[1] + ".";
+				return word;
+			}
+			
+			const disableButton = (button1) => {
+				button1.disabled = true;
+			};
+			
+			const enableButton = (button1) => {
+				button1.disabled = false;
+			};
+			
+			
+			let rowIndex = 0;
+			let lineIndex = 0;
+			let currentWord = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""]];
+			const boxes = [["box0","box1", "box2", "box3"], ["box4", "box5", "box6", "box7"], ["box8", "box9", "box10", "box11"], ["box12", "box13", "box14", "box15"]];
+			
+			document.addEventListener("keyup", function(e){
+				if (document.getElementById("board")) {
+					var pressedKey = e.key;
+					handleClick(pressedKey)
+					
+				}
+			});
+			function hasClass(element, clsName) {
+				return(' ' + element.className + ' ').indexOf(' ' + clsName + ' ') > -1;
+			}
+			
+			function failed() {
+				console.log("Failed Toggle");
+				if (document.getElementsByClassName("showHint").length != 0) {
+					hintToggle();
+				}
+				let failedBarContainer = document.getElementById("failedBarContainer");
+				(async () => {
+					word = await getWordAndHint(number);
+					let failedBar = document.getElementById("failedBar");
+					failedBar.innerHTML = "You missed the word <b>" + word + "</b> and lost!";
+					failedBarContainer.classList.toggle("showFailedBar");
+					failedBarContainer.setAttribute("id", "showFailedBarIsOn");
+				})()
+			}
+			
+			function startOver() {
+				if (document.getElementById("showFailedBarIsOn")) {
+					console.log("Start Over -- Failed")
+					let failedBar = document.getElementById("showFailedBarIsOn");
+					failedBar.classList.toggle("showFailedBar");
+					failedBar.setAttribute("id", "failedBarContainer");
+					const startButton = document.getElementById("startButton");
+					number = Number.parseInt(Math.random() * 20);
+					(async () => {
+						disableButton(startButton);
+						startButton.innerHTML = "Loading...";
+						word = await getWordAndHint(number);
+						startButton.innerHTML = "Start Over";
+						enableButton(startButton);
+					})()
+				} else if (document.getElementById("board")) {
+					console.log("Start Over -- Restart");
+					const startButton = document.getElementById("startButton");
+					number = Number.parseInt(Math.random() * 20);
+					(async () => {
+						disableButton(startButton);
+						startButton.innerHTML = "Loading...";
+						word = await getWordAndHint(number);
+						startButton.innerHTML = "Start Over";
+						enableButton(startButton);
+					})()
+				} else {
+					console.log("Start Over -- Won")
+					let winBar = document.getElementById("winBarContainer");
+					winBar.classList.toggle("showWinBar");
+					let winBoard = document.getElementById("hideBoard");
+					winBoard.setAttribute("id", "board");
+					let winHidden = document.getElementById("shownWin");
+					winHidden.setAttribute("id", "hiddenWin");
+					const startButton = document.getElementById("startButton");
+					number = Number.parseInt(Math.random() * 20);
+					(async () => {
+						disableButton(startButton);
+						startButton.innerHTML = "Loading...";
+						word = await getWordAndHint(number);
+						startButton.innerHTML = "Start Over";
+						enableButton(startButton);
+					})()
+				}
+				boxes.forEach(arrays => {
+					arrays.forEach(element => {
+						document.getElementById(element).innerHTML = "";
+						document.getElementById(element).classList.remove("correctLocation");
+						document.getElementById(element).classList.remove("correctChar");
+						document.getElementById(element).classList.remove("incorrectChar");
+						rowIndex = 0;
+						lineIndex = 0;
+						currentWord = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""]];
+					})
+				});
+				if (document.getElementsByClassName("showHint").length != 0) {
+					hintToggle();
+				}
+			}
+			
+			function win() {
+				console.log("Win Toggle");
+				if (document.getElementsByClassName("showHint").length != 0) {
+					hintToggle();
+				}
+				let winBarContainer = document.getElementById("winBarContainer");
+				winBarContainer.classList.toggle("showWinBar");
+				(async () => {
+					word = await getWordAndHint(number);
+					let winBar = document.getElementById("winBar");
+					winBar.innerHTML = "You guesed the word <b>" + word + "</b> correctly!";
+				})()
+			
+				let winBoard = document.getElementById("board");
+				winBoard.setAttribute("id", "hideBoard");
+			
+				let winHidden = document.getElementById("hiddenWin");
+				winHidden.setAttribute("id", "shownWin");
+			}
+			
+			
+			function themeToggle() {
+				console.log("Dark-mode Toggle");
+				let element = document.body;
+				element.classList.toggle("dark-mode");
+			}
+			
+			function hintToggle() {
+				console.log("Hint Toggle");
+				let element = document.getElementById("hintContainer");
+				element.classList.toggle("showHint");
+			}
+			
+			function infoToggle() {
+				console.log("Info Toggle");
+				let element = document.getElementById("infoContainer");
+				element.classList.toggle("info-tab");
+				if(document.getElementById("exist")){
+					removeOld();
+				} else {
+					addNew();
+				}
+			 }
+			
+			 function removeOld() {
+				var checkExist =  document.getElementById('exist');
+				checkExist.remove();
+			 }
+			
+			 function addNew() {
+				const txtContainer = document.createElement("div");
+				const infoDiv = document.getElementById("info");
+				txtContainer.setAttribute("id", "exist");
+			
+				const h3 = document.createElement("h3");
+				h3.setAttribute("id", "h3Style");
+				const nodeh3 = document.createTextNode("How to Play");
+				h3.appendChild(nodeh3);
+				txtContainer.appendChild(h3);
+			
+				const ul = document.createElement("ul");
+				addLiToUl("Start typing. The letters will appear in the boxes.", ul)
+				addLiToUl("Remove letters whith Backspace.", ul)
+				addLiToUl("Hit Enter/Return to submit an answer.", ul)
+				addLiToUl("Letters with green background are in the right spot.", ul)
+				addLiToUl("Letters with yellow background exist in the word, but are in the wrong spots.", ul)
+				addLiToUl("Letters with gray background do not exits in the word.", ul)
+				addLiToUl("If you need a hint, click the ? icon", ul)
+				txtContainer.appendChild(ul);
+				infoDiv.appendChild(txtContainer);
+			 }
+			
+			 function addLiToUl(txt, ul) {
+				const li = document.createElement("li")
+				const nodeLi = document.createTextNode(txt);
+				li.appendChild(nodeLi);
+				li.setAttribute("id", "liStyle");
+				ul.appendChild(li);
+			 }
+			
+			
+			const keyboard = document.querySelector(".keyboard");
+			const keys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "Enter", "z", "x", "c", "v", "b", "n", "m", "<<<"];
+			
+			const handleClick = (x) => {
+				if (x.toLowerCase() != x.toUpperCase() && rowIndex != 4 && String(x).length == 1) {
+					document.getElementById(boxes[lineIndex][rowIndex]).innerHTML = x.toLowerCase();
+					if (rowIndex < 4) {
+						currentWord[lineIndex][rowIndex] = x;
+						rowIndex = rowIndex + 1;
+					}
+				}
+				if (x == "Enter" && lineIndex < 4 && rowIndex != 4) {
+					window.alert("You must first complete the word befor submiting your answer.")
+				}
+				if (x == "Enter" && lineIndex < 4 && rowIndex == 4) {
+					rowIndex = 0;
+					let greenCount = 0;
+					console.log("");
+					let greenKeys = [];
+					let yellowKeys = [];
+					for (let indexWord = 0; indexWord < 4; indexWord++) {
+						let wordChar = word.toLowerCase()[indexWord];
+						let check = true;
+						console.log("");
+						console.log("******************************");
+						console.log("The letter " + wordChar + ".");
+						console.log("******************************");
+						console.log("");
+						for (let indexText = 0; indexText < 4; indexText++) {
+							let squareDiv = document.getElementById("box" + String(((lineIndex * 4) + indexText)));
+							let text = squareDiv.textContent;
+							let key = document.getElementById(text);
+							console.log("");
+							console.log("------------------------------");
+							console.log("Looking for the letter " + wordChar + " in the GREEN for loop.");
+							console.log("------------------------------");
+							console.log("");
+							console.log("Checking if wordChar " + wordChar + " is the same as " + text + ",");
+							console.log("and that wordChar location " + indexWord + " is the same as text location " + indexText);
+							if (indexText == indexWord && wordChar == text) {
+								console.log("Yes! " + wordChar + " == " + text + " and " + indexWord + " == " + indexText + ".");
+								console.log("");
+								squareDiv.classList.add("correctLocation");
+								greenKeys.push(wordChar);
+								key.classList.add("correctLocation");
+								greenCount = greenCount + 1;
+								check = false
+								break;
+							} else {
+								console.log("No! " + wordChar + " != " + text + " and/or " + indexWord + " != " + indexText + ".");
+								console.log("");
+							}
+						}
+			
+						for (let indexText = 0; indexText < 4; indexText++) {
+							let squareDiv = document.getElementById("box" + String(((lineIndex * 4) + indexText)));
+							let text = squareDiv.textContent;
+							let key = document.getElementById(text);
+							if (check) {
+								console.log("");
+								console.log("------------------------------");
+								console.log("Looking for the letter " + wordChar + " in the YELLOW for loop.");
+								console.log("------------------------------");
+								console.log("");
+								console.log("Checking if wordChar " + wordChar + " is the same as " + text + ",");
+								console.log("and that " + hasClass(squareDiv, "correctLocation") + " and " + hasClass(squareDiv, "correcChar") + " are false.");
+								if (wordChar == text && hasClass(squareDiv, "correctLocation") == false && hasClass(squareDiv, "correcChar") == false) {
+									console.log("Yes! " + wordChar + " == " + text + " at indexWord " + indexWord + " and indexText " + indexText + ".");
+									console.log("");
+									squareDiv.classList.add("correctChar");
+									if (greenKeys.includes(wordChar) == false) {
+										yellowKeys.push(wordChar);
+										key.classList.add("correctChar");
+									}
+									break;
+								} else {
+									console.log("No! " + wordChar + " != " + text + " at indexWord " + indexWord + " and indexText " + indexText + ".");
+									console.log("");
+								}
+							}
+						}
+					}
+					console.log("");
+					console.log("------------------------------");
+					console.log("------------------------------");
+					console.log("");
+					for (let indexText = 0; indexText < 4; indexText++) {
+						let squareDiv = document.getElementById("box" + String(((lineIndex * 4) + indexText)));
+						let text = squareDiv.textContent;
+						let key = document.getElementById(text);
+						console.log("Checking if letter " + text + " in box " + indexText + " should be is gray.")
+						if (greenKeys.includes(text) == false && yellowKeys.includes(text) == false ) {
+							console.log("greenKeys: " + hasClass(squareDiv, "correctLocation") + " and yellowKeys: " + hasClass(squareDiv, "correcChar") + " should be false.");
+							console.log("Yes! The letter " + text + " in box " + indexText + " is gray.")
+							console.log("");
+							squareDiv.classList.add("incorrectChar");
+							key.classList.add("incorrectChar");
+						} else {
+							console.log("No! The letter " + text + " in box " + indexText + " is not gray.")
+							console.log("");
+						}
+					}
+					if (greenCount == 4) {
+						win();
+					}
+					lineIndex = lineIndex + 1;
+					if (greenCount != 4 && lineIndex == 4) {
+						failed()
+					}
+				}
+				if ((x == "Backspace" || x == "<<<") && rowIndex != 0) {
+					rowIndex = rowIndex - 1;
+					currentWord[lineIndex][rowIndex] = "";
+					document.getElementById(boxes[lineIndex][rowIndex]).innerHTML = "";
+				}
+			}
+			
+			keys.forEach(key => {
+				const buttonElement = document.createElement("button");
+				buttonElement.textContent = key;
+				buttonElement.setAttribute("id", key)
+				buttonElement.addEventListener("click", () => handleClick(key));
+				keyboard.append(buttonElement)
+			})
+		</script>
+  	</body>
+</html>

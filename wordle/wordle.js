@@ -160,6 +160,9 @@ function startOver() {
     if (document.getElementsByClassName("showHint").length != 0) {
         hintToggle();
     }
+    if (document.getElementsByClassName("info-tab").length != 0) {
+        infoToggle();
+    }
 }
 
 function win() {

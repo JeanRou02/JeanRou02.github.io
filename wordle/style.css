@@ -5,7 +5,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: white;
   color: black;
-  min-height:100vh; 
+  height:100vh; 
+  height: calc(var(--vh, 1vh) * 100);
   display:flex; 
   flex-direction:column;
 }
@@ -118,7 +119,7 @@ body {
   justify-content: flex-start;
   flex-wrap: nowrap;
   height: auto;
-  padding: 0px 30px;
+  padding: 0px 10px;
   background-color: inherit;
   border-top-style: solid;
   border-bottom-style: solid;
@@ -128,14 +129,14 @@ body {
   
 }
 .header_left {
-  flex: 1;
+  flex: 0;
 }
 .header_center {
-  padding: 20px;
   font-size: 2rem;
-  text-align: center;
   flex: 4;
   cursor: default;
+  text-align: left;
+  padding-left: 5px;
 }
 .header_right {
   display: flex;
@@ -143,12 +144,12 @@ body {
   text-align: right;
   justify-content: space-between;
   font-size: 1.5rem;
-  flex: 1;
+  flex: 2;
 }
 .header_right button {
   width: 100%;
   height: 84px;
-  padding: 0px 0px;
+  padding: 0px 10px;
   border: none;
   background-color: inherit;
   text-align: center;
@@ -178,11 +179,12 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
+  padding-bottom: 10px;
 }
 .contentContainer {
   flex-grow: 150;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   flex-wrap: nowrap;
 }
@@ -193,8 +195,9 @@ body {
   justify-content: flex-start;
   flex-wrap: nowrap;
   height: auto;
-  border-left: 1px solid;
   color: inherit;
+  border-top-style: solid;
+  border-bottom-width: 2px;
 }
 .info-tab #info{
   padding: 20px;
@@ -204,22 +207,22 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  padding-top: 20px;
+  padding-top: 0px;
 }
 #board {
   display: grid;
+  grid-gap: 1px;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 2px;
   padding: 10px;
   box-sizing: border-box;
 }
 .square {
   border: 2px solid black;
-  min-width: 70px;
-  min-height: 70px;
   border-radius: 2px;
   text-align: center;
-  font-size: 3.5rem;
+  min-width: 60px;
+  min-height: 60px;
+  font-size: 3rem;
 }
 .correctChar{
   background-color: rgb(230, 202, 19);
@@ -235,11 +238,11 @@ body {
 -------------------------------*/
 
 .startButton-container {
-  padding-top: 10px;
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
+  padding-top: 0px;
 }
 .startButton {
   background-color: #4CAF50;
@@ -340,6 +343,7 @@ body {
   margin: 2px;
   font-size: 1.2rem;
   color: inherit;
+  padding: 0px;
 }
 .keyboard button.correctLocation {
   background-color: rgb(10, 193, 10);
@@ -366,51 +370,49 @@ body {
 /*-------------------------------
 -------------------------------*/
 
-@media screen and (max-width: 850px) {
-  .header_left {   
-    flex: 2;
-  }
-  .header_right {
-    flex: 2;
-  }
-}
-@media screen and (max-width: 500px) {
+@media screen and (min-width: 500px) {
   .header {
-    padding: 0px 10px;
+    padding: 0px 30px;
   }
   .header_left {   
-    flex: 0;
+    flex: 2;
   }
   .header_right button{
-    padding: 0px 10px;
+    padding: 0px 0px;
   }
   .header_center {
-    text-align: left;
-    padding-left: 5px;
+    padding: 20px;
+    text-align: center;
   }
   #board-container {
-    padding-top: 0px;
+    padding-top: 20px;
   }
   #board {
-    grid-gap: 1px;
+    grid-gap: 2px;
   }
   .square {
-    min-width: 60px;
-    min-height: 60px;
-    font-size: 3rem;
+    min-width: 70px;
+    min-height: 70px;
+    font-size: 3.5rem;
   }
   .startButton-container {
-    padding-top: 0px;
+    padding-top: 10px;
   }
   .contentContainer {
-    flex-direction: column;
-  }
-  .mainContentContainer {
-    padding-bottom: 10px;
+    flex-direction: row;
   }
   .info-tab {
-    border-left-width: 0px;
-    border-top-style: solid;
-    border-bottom-width: 2px;
+    border-left: 2px solid;
+
+  border-top-width: 0px;
+  }
+}
+
+@media screen and (min-width: 850px) {
+  .header_left {   
+    flex: 1;
+  }
+  .header_right {
+    flex: 1;
   }
 }

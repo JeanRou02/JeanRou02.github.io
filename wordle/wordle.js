@@ -6,9 +6,9 @@ window.addEventListener('resize', () => {
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   });
 
-const jsonLen = 47;
+const jsonLen = 46;
 let usedNums = [];
-let number = Number.parseInt(Math.random() * 2);
+let number = Number.parseInt(Math.random() * jsonLen);
 usedNums.push(number);
 
 const startButton = document.getElementById("startButton");
@@ -81,6 +81,8 @@ function hasClass(element, clsName) {
 
 function failed() {
     console.log("Failed Toggle");
+    const hintButton = document.getElementById("hintButton");
+    const startButton = document.getElementById("startButton");
     if (document.getElementsByClassName("showHint").length != 0) {
         hintToggle();
     }
@@ -92,6 +94,9 @@ function failed() {
         failedBarContainer.classList.toggle("showFailedBar");
         failedBarContainer.setAttribute("id", "showFailedBarIsOn");
     })()
+
+    hintButton.classList.toggle("hidden");
+    startButton.classList.toggle("border");
 }
 
 function startOver() {
@@ -171,10 +176,16 @@ function startOver() {
     if (document.getElementsByClassName("info-tab").length != 0) {
         infoToggle();
     }
+    if (document.getElementsByClassName("border").length != 0) {
+        startButton.classList.toggle("border");
+        hintButton.classList.toggle("hidden");
+    }
     enableButton(startButton);
 }
 
 function win() {
+    const startButton = document.getElementById("startButton");
+    const hintButton = document.getElementById("hintButton");
     console.log("Win Toggle");
     if (document.getElementsByClassName("showHint").length != 0) {
         hintToggle();
@@ -192,6 +203,9 @@ function win() {
 
     let winHidden = document.getElementById("hiddenWin");
     winHidden.setAttribute("id", "shownWin");
+
+    hintButton.classList.toggle("hidden");
+    startButton.classList.toggle("border");
 }
 
 
@@ -270,89 +284,57 @@ const handleClick = (x) => {
         console.log("");
         let greenKeys = [];
         let yellowKeys = [];
-        let keepTrack = [];
+        let keepTrackGreen = [];
+        let keepTrackYellow = [];
+
         for (let indexWord = 0; indexWord < 4; indexWord++) {
             let wordChar = word.toLowerCase()[indexWord];
             let check = true;
-            console.log("");
-            console.log("******************************");
-            console.log("The letter " + wordChar + ".");
-            console.log("******************************");
-            console.log("");
             for (let indexText = 0; indexText < 4; indexText++) {
                 let squareDiv = document.getElementById("box" + String(((lineIndex * 4) + indexText)));
                 let text = squareDiv.textContent;
                 let key = document.getElementById(text);
-                console.log("");
-                console.log("------------------------------");
-                console.log("Looking for the letter " + wordChar + " in the GREEN for loop.");
-                console.log("------------------------------");
-                console.log("");
-                console.log("Checking if wordChar " + wordChar + " is the same as " + text + ",");
-                console.log("and that wordChar location " + indexWord + " is the same as text location " + indexText);
                 if (indexText == indexWord && wordChar == text) {
-                    console.log("Yes! " + wordChar + " == " + text + " and " + indexWord + " == " + indexText + ".");
-                    console.log("");
                     squareDiv.classList.add("correctLocation");
                     greenKeys.push(wordChar);
                     key.classList.add("correctLocation");
                     greenCount = greenCount + 1;
                     check = false
-                    keepTrack.push(indexText);
+                    keepTrackGreen.push(indexText);
                     break;
-                } else {
-                    console.log("No! " + wordChar + " != " + text + " and/or " + indexWord + " != " + indexText + ".");
-                    console.log("");
                 }
             }
-
             for (let indexText = 0; indexText < 4; indexText++) {
                 let squareDiv = document.getElementById("box" + String(((lineIndex * 4) + indexText)));
                 let text = squareDiv.textContent;
                 let key = document.getElementById(text);
                 if (check) {
-                    console.log("");
-                    console.log("------------------------------");
-                    console.log("Looking for the letter " + wordChar + " in the YELLOW for loop.");
-                    console.log("------------------------------");
-                    console.log("");
-                    console.log("Checking if wordChar " + wordChar + " is the same as " + text + ",");
-                    console.log("and that " + hasClass(squareDiv, "correctLocation") + " and " + hasClass(squareDiv, "correcChar") + " are false.");
-                    if (wordChar == text && hasClass(squareDiv, "correctLocation") == false && hasClass(squareDiv, "correcChar") == false) {
-                        console.log("Yes! " + wordChar + " == " + text + " at indexWord " + indexWord + " and indexText " + indexText + ".");
-                        console.log("");
+                    if (wordChar == text && hasClass(squareDiv, "correctLocation") == false && hasClass(squareDiv, "correctChar") == false) {
                         squareDiv.classList.add("correctChar");
                         if (greenKeys.includes(wordChar) == false) {
                             yellowKeys.push(wordChar);
-                            key.classList.add("correctChar");
-                            keepTrack.push(indexText);
+                            keepTrackYellow.push(indexText);
+                            if (key.classList.contains("correctLocation") == false) {
+                                key.classList.add("correctChar");
+                            }
                         }
                         break;
-                    } else {
-                        console.log("No! " + wordChar + " != " + text + " at indexWord " + indexWord + " and indexText " + indexText + ".");
-                        console.log("");
                     }
                 }
-            
+            }
+        }  
         for (let indexText = 0; indexText < 4; indexText++) {
             let squareDiv = document.getElementById("box" + String(((lineIndex * 4) + indexText)));
             let text = squareDiv.textContent;
             let key = document.getElementById(text);
-            // console.log("Checking if letter " + text + " in box " + indexText + " should be is gray.")
             if (squareDiv.classList.contains("correctChar") == false && squareDiv.classList.contains("correctLocation") == false ) {
-                // console.log("greenKeys: " + hasClass(squareDiv, "correctLocation") + " and yellowKeys: " + hasClass(squareDiv, "correcChar") + " should be false.");
-                // console.log("Yes! The letter " + text + " in box " + indexText + " is gray.")
-                // console.log("");
                 squareDiv.classList.add("incorrectChar");
-            } else if (keepTrack.includes(indexText) == false) {
+            } else if (key.classList.contains("correctChar") == false && key.classList.contains("correctLocation") == false) {
                 key.classList.add("incorrectChar");
-            } else {
-                // console.log("No! The letter " + text + " in box " + indexText + " is not gray.")
-                // console.log("");
-            }
+            }hasClass
         }
-            }
-        }
+
+        
         if (greenCount == 4) {
             win();
         }
@@ -367,6 +349,7 @@ const handleClick = (x) => {
         document.getElementById(boxes[lineIndex][rowIndex]).innerHTML = "";
     }
 }
+
 for (let index = 0; index < keys.length; index++) {
     const keyboardRow1Container = document.createElement("div");
     keyboardRow1Container.classList.add("keyboardRow1Container" + index);

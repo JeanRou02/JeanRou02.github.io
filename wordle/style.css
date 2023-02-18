@@ -228,11 +228,11 @@ body {
   min-height: 60px;
   font-size: 3rem;
 }
-.correctChar{
-  background-color: rgb(230, 202, 19);
-}
 .correctLocation{
   background-color: rgb(10, 193, 10);
+}
+.correctChar{
+  background-color: rgb(230, 202, 19);
 }
 .incorrectChar{
   background-color: rgb(150, 150, 150);
@@ -374,11 +374,11 @@ body {
   flex: 1.5;
   font-size: 1rem;
 }
-.keyboard button.correctLocation {
-  background-color: rgb(10, 193, 10);
-}
 .keyboard button.correctChar {
   background-color: rgb(230, 202, 19);
+}
+.keyboard button.correctLocation {
+  background-color: rgb(10, 193, 10);
 }
 .keyboard button.incorrectChar {
   background-color: rgb(150, 150, 150);
@@ -386,11 +386,11 @@ body {
 .dark-mode .keyboard button {
   background-color: rgb(35, 35, 35);
 }
-.dark-mode .keyboard button.correctLocation {
-  background-color: rgb(17, 116, 17);
-}
 .dark-mode .keyboard button.correctChar {
   background-color: rgb(153, 133, 8);
+}
+.dark-mode .keyboard button.correctLocation {
+  background-color: rgb(17, 116, 17);
 }
 .dark-mode .keyboard button.incorrectChar {
   background-color: rgb(82, 82, 82);

@@ -7,7 +7,7 @@ window.addEventListener('resize', () => {
   });
 
 
-let number = Number.parseInt(Math.random() * 20);
+let number = Number.parseInt(Math.random() * 2);
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -36,13 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function getWordAndHint(num) {
     let obj;
-    const res = await fetch("https://api.masoudkf.com/v1/wordle", {
-        headers: {
-        "x-api-key": "sw0Tr2othT1AyTQtNDUE06LqMckbTiKWaVYhuirv",
-        }
+    const res = await fetch("db.json", {
     });
+    console.log("res: ", res);
     obj = await res.json();
+    console.log("obj: ", obj);
     const wordAndHint = [obj.dictionary[num].word, obj.dictionary[num].hint];
+    console.log("wordAndHint: ", wordAndHint);
     console.log("Word is: ", wordAndHint[0]);
     console.log("Hint is: ", wordAndHint[1]);
     let word = wordAndHint[0];
@@ -102,7 +102,7 @@ function startOver() {
         failedBar.classList.toggle("showFailedBar");
         failedBar.setAttribute("id", "failedBarContainer");
         const startButton = document.getElementById("startButton");
-        number = Number.parseInt(Math.random() * 20);
+        number = Number.parseInt(Math.random() * 2);
         (async () => {
             disableButton(startButton);
             startButton.innerHTML = "Loading...";
@@ -113,7 +113,7 @@ function startOver() {
     } else if (document.getElementById("board")) {
         console.log("Start Over -- Restart");
         const startButton = document.getElementById("startButton");
-        number = Number.parseInt(Math.random() * 20);
+        number = Number.parseInt(Math.random() * 2);
         (async () => {
             disableButton(startButton);
             startButton.innerHTML = "Loading...";
@@ -130,7 +130,7 @@ function startOver() {
         let winHidden = document.getElementById("shownWin");
         winHidden.setAttribute("id", "hiddenWin");
         const startButton = document.getElementById("startButton");
-        number = Number.parseInt(Math.random() * 20);
+        number = Number.parseInt(Math.random() * 2);
         (async () => {
             disableButton(startButton);
             startButton.innerHTML = "Loading...";

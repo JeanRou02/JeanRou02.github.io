@@ -2,11 +2,191 @@
     "dictionary": [
         {
             "word": "Pain",
-            "hint": "Working a customer service job gives you..."
+            "hint": "Working a Customer service job gives you..."
         },
         {
             "word": "Nerd",
-            "hint": "You may be considered one, if you know how to solve caculus problems, know what css is and understand how EMF works."
+            "hint": "You may be considered one, if you like Star Wars."
+        },
+        {
+            "word": "nail",
+            "hint": "You use them to hang up pictures of yourself on the wall because, let's face it, your selfies are a work of art."
+        },
+        {
+            "word": "fish",
+            "hint": "They're like underwater dogs, except they make bubbles, they don't bark, can't be trained, and you can't take them for a walk. So, basically, they're nothing like dogs."
+        },
+        {
+            "word": "jail",
+            "hint": "A place where you can finally catch up on all the sleep you've been missing out on. Just try not to drop the soap."
+        },
+        {
+            "word": "lips",
+            "hint": "The things you use to apply your lipstick, even though you're a guy and have no idea how to apply lipstick. (We won't judge.)"
+        },
+        {
+            "word": "nike",
+            "hint": "The brand you pick you make when you try to run a marathon in shoes that you bought solely for their stylish appearance."
+        },
+        {
+            "word": "flag",
+            "hint": "A piece of fabric that's supposed to represent your country, but really just reminds you of all the times you forgot to do your laundry."
+        },
+        {
+            "word": "dead",
+            "hint": "The state of being you achieve when you finally finish watching every single episode of The Office for the 10th time."
+        },
+        {
+            "word": "legs",
+            "hint": "What you use to walk, run, and dance the night away. Or, in your case, to sit on the couch and watch Netflix for 12 hours straight."
+        },
+        {
+            "word": "tent",
+            "hint": "A portable home for when you want to get away from it all and experience nature. Or, in your case, to hide from your ex."
+        },
+        {
+            "word": "tear",
+            "hint": "What happens when you finally realize that the person you've been texting for the last 3 weeks is actually a bot."
+        },
+        {
+            "word": "nose",
+            "hint": "The thing you use to smell your roommate's questionable cooking experiments. Or, in your case, to smell your own questionable cooking experiments."
+        },
+        {
+            "word": "snow",
+            "hint": "The magical white stuff that falls from the sky and covers everything in a beautiful blanket. Or, in your case, the stuff that you curse at because it makes your commute to work take twice as long."
+        },
+        {
+            "word": "olaf",
+            "hint": "The loveable, huggable, snowman from Frozen. Or, in your case, your weird neighbor who's always offering you homemade soup."
+        },
+        {
+            "word": "hulk",
+            "hint": "A big, green, angry guy who's really good at smashing things. Or, in your case, the feeling you get when someone eats the last slice of pizza without asking."
+        },
+        {
+            "word": "cold",
+            "hint": "What happens to your hands and feet when your ex walks by."
+        },
+        {
+            "word": "blue",
+            "hint": "This color describes both your mood when your crush dosn't text you back and the colour of your hair after you realize you hate men."
+        },
+        {
+            "word": "rose",
+            "hint": "A flower that's perfect for expressing your love and appreciation for someone, or for passive-aggressively apologizing for a mistake."
+        },
+        {
+            "word": "tree",
+            "hint": "The perfect thing to go it under if you need some shade, or if you want to reconnect with nature and pretend to be a squirrel for a few hours."
+        },
+        {
+            "word": "nemo",
+            "hint": "A small fish who's lost his family and has to navigate the dangers of the ocean. In other words, he's basically just like you trying to find your way through the grocery store."
+        },
+        {
+            "word": "crab",
+            "hint": "Like a spider, but in the ocean, and with pincers. Wait, why did we ever leave the ocean?"
+        },
+        {
+            "word": "knee",
+            "hint": "It's like an elbow, but for your leg. And don't even get me started on the ankle, that's just a whole other thing."
+        },
+        {
+            "word": "leaf",
+            "hint": "The part of the tree that falls off in autumn, or the part of your salad that you pretend to like because it makes you feel healthy."
+        },
+        {
+            "word": "seen",
+            "hint": "A word that's often followed by 'but didn't reply,' which is just a polite way of saying 'I'm ignoring you.'"
+        },
+        {
+            "word": "fork",
+            "hint": "It's like a spoon, but with less roundness. And less scooping. Actually, you know what? It's nothing like a spoon."
+        },
+        {
+            "word": "beef",
+            "hint": "It's what's for dinner. Unless you're a vegetarian, in which case, it's what's not for dinner."
+        },
+        {
+            "word": "corn",
+            "hint": "A vegetable that always finds a way to get stuck in your teeth, even though you swear you chewed it thoroughly."
+        },
+        {
+            "word": "sock",
+            "hint": "A piece of clothing that's always going missing in the laundry. It's like there's a monster living in your washing machine eating them."
+        },
+        {
+            "word": "milk",
+            "hint": "The thing you pour on your cereal in the morning, but that always ends up making it soggy and unappetizing."
+        },
+        {
+            "word": "iron",
+            "hint": "The thing you use to make your clothes look neat and tidy, but that always ends up burning a hole in your favorite shirt."
+        },
+        {
+            "word": "jeep",
+            "hint": "The vehicle you drive when you want to look like a tough, rugged adventurer, but that really just makes you look like you're compensating for something."
+        },
+        {
+            "word": "kite",
+            "hint": "The toy you always wanted as a kid, but that you never actually got because your parents said it was too dangerous."
+        },
+        {
+            "word": "lamp",
+            "hint": "The thing you use to light up your room, but that always manages to cast a creepy shadow on the wall that makes you think there's a monster in the closet."
+        },
+        {
+            "word": "duck",
+            "hint": "The bird that you can never take seriously because of its name. Seriously, try saying 'duck' without laughing."
+        },
+        {
+            "word": "fire",
+            "hint": "The thing you start when you want to roast marshmallows, but end up burning down the whole forest."
+        },
+        {
+            "word": "frog",
+            "hint": "The animal that makes a great prince, as long as you're into the whole 'turning into a prince' thing."
+        },
+        {
+            "word": "gold",
+            "hint": "The material that's supposed to make you rich and famous, but instead just makes you the target of all the pirates and dragons in the world."
+        },
+        {
+            "word": "hate",
+            "hint": "The feeling you get when someone eats the last slice of pizza, even though they know it was yours."
+        },
+        {
+            "word": "cake",
+            "hint": "The solution to all of life's problems. Or, at least, the ones that can be solved with baking."
+        },
+        {
+            "word": "cat",
+            "hint": "The reason your couch is scratched up, your curtains are torn, and your sanity is slowly slipping away."
+        },
+        {
+            "word": "time",
+            "hint": "A non-renewable resource that you waste by watching cat videos on YouTube."
+        },
+        {
+            "word": "jazz",
+            "hint": "A genre of music that's like a smoothie made from all the best parts of funk, soul, and blues. Or, in your case, the sound you make when you try to play an instrument."
+        },
+        {
+            "word": "duck",
+            "hint": "A bird that's like a fish, except it can fly, it quacks, and you can eat it. So, basically, it's nothing like a fish."
+        },
+        {
+            "word": "hear",
+            "hint": "What you do when someone tells you a joke, a secret, or their life story. Or, in your case, what you wish your crush would do when you're around."
+        },
+        {
+            "word": "purr",
+            "hint": "The sound that cats make when they're happy, content, or plotting to take over the world. Or, in your case, the sound you make when you finally get to take off your shoes after a long day."
+        },
+        {
+            "word": "math",
+            "hint": "The subject in school that can make you feel smart, stupid, or both at the same time. Or, in your case, the thing you use a calculator for."
         }
-    ]
+        ]
 }

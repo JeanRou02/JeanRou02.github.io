@@ -10,6 +10,9 @@ body {
   display:flex; 
   flex-direction:column;
 }
+.hidden {
+  display: none;
+}
 
 /*-------------------------------
 -------------------------------*/
@@ -87,7 +90,7 @@ body {
   border-top-color: rgb(0, 50, 0);
 }
 .dark-mode .startButton {
-  background-color: rgb(0, 50, 0);
+  background-color: rgb(35, 35, 35);
   color: rgb(200, 200, 200);
 }
 .dark-mode .header_right button:hover {
@@ -237,26 +240,37 @@ body {
 /*-------------------------------
 -------------------------------*/
 
-.startButton-container {
+.underKeyboardContainer {
   display: flex;
-  width: 100%;
   align-items: center;
   justify-content: center;
   padding-top: 0px;
+  justify-content: center;
+  align-content: center;
+}
+
+.startButton-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0px;
+  justify-content: center;
+  align-content: center;
+  flex: 1;
+  max-width: 510px;
 }
 .startButton {
-  background-color: #4CAF50;
+  flex: 1;
+  height: 38px;
+  border-radius: 4px;
   border: none;
-  color: white;
-  padding: 10px 30px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 5px;
+  background-color: rgb(229, 229, 229);
+  margin: 2px;
+  margin-top: 7px;
+  margin-bottom: 9px;
   font-size: 1.2rem;
+  color: inherit;
+  padding: 0px;
 }
 
 /*-------------------------------
@@ -377,6 +391,9 @@ body {
 -------------------------------*/
 
 @media screen and (min-width: 500px) {
+  .footerContainer {
+    display: block;
+  }
   .header {
     padding: 0px 30px;
   }
@@ -401,9 +418,6 @@ body {
     min-width: 70px;
     min-height: 70px;
     font-size: 3.5rem;
-  }
-  .startButton-container {
-    padding-top: 10px;
   }
   .contentContainer {
     flex-direction: row;

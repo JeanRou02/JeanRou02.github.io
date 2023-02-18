@@ -15,7 +15,6 @@
 			</div>
 			<div class="header_right">
 				<button onclick="themeToggle()">&#9681;</button>
-				<button onclick="hintToggle()">&#63;</button>
 				<button onclick="infoToggle()">&#9432;</button>
 			</div>
 		</div>
@@ -27,11 +26,24 @@
 					<div id="hiddenWin"><img src="https://res.cloudinary.com/mkf/image/upload/v1675467141/ENSF-381/labs/congrats_fkscna.gif" alt="Congartulations!">
 					</div>
 				</div>
-				<div class="startButton-container">
-					<button onclick="startOver()" class="startButton" id="startButton">Start Over</button>
-				</div>
 				<div class="keyboardContainer">
 					<div class="keyboard"></div>
+				</div>
+				<div class="underKeyboardContainer">
+					<div class="startButton-container">
+						<button onclick="startOver()" class="startButton" id="startButton">New Word</button>
+						<button onclick="hintToggle()" class="startButton">Hint</button>
+					</div>
+
+				</div>
+				<div id="hintContainer" class="hintContainer">
+					<span id="hint"></span>
+				</div>
+				<div id="winBarContainer" class="winBarContainer">
+					<span id="winBar">You Won!</span>
+				</div>
+				<div id="failedBarContainer" class="failedBarContainer">
+					<span id="failedBar">You Failed!</span>
 				</div>
 			</div>
 			<div id="infoContainer">
@@ -39,15 +51,6 @@
 			</div>
 		</div>
 		<div class="footerContainer">
-			<div id="hintContainer" class="hintContainer">
-				<span id="hint"></span>
-			</div>
-			<div id="winBarContainer" class="winBarContainer">
-				<span id="winBar">You Won!</span>
-			</div>
-			<div id="failedBarContainer" class="failedBarContainer">
-				<span id="failedBar">You Failed!</span>
-			</div>
 			<div class="footer">
 				<span>&#169; Jean-Nicolas Rouette 2023</span>
 			</div>

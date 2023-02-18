@@ -6,19 +6,21 @@ window.addEventListener('resize', () => {
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   });
 
-
+const jsonLen = 47;
+let usedNums = [];
 let number = Number.parseInt(Math.random() * 2);
+usedNums.push(number);
 
+const startButton = document.getElementById("startButton");
 document.addEventListener("DOMContentLoaded", () => {
 
     createSquares();
 
-    const startButton = document.getElementById("startButton");
     (async () => {
         disableButton(startButton);
         startButton.innerHTML = "Loading...";
         word = await getWordAndHint(number);
-        startButton.innerHTML = "Start Over";
+        startButton.innerHTML = "New Word";
         enableButton(startButton);
     })()
 
@@ -38,11 +40,8 @@ async function getWordAndHint(num) {
     let obj;
     const res = await fetch("db.json", {
     });
-    console.log("res: ", res);
     obj = await res.json();
-    console.log("obj: ", obj);
     const wordAndHint = [obj.dictionary[num].word, obj.dictionary[num].hint];
-    console.log("wordAndHint: ", wordAndHint);
     console.log("Word is: ", wordAndHint[0]);
     console.log("Hint is: ", wordAndHint[1]);
     let word = wordAndHint[0];
@@ -61,7 +60,7 @@ const enableButton = (button1) => {
 
 
 const keyboard = document.querySelector(".keyboard");
-const keys = [["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"], ["a", "s", "d", "f", "g", "h", "j", "k", "l"], ["Enter", "z", "x", "c", "v", "b", "n", "m", "<<<"]];
+const keys = [["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"], ["a", "s", "d", "f", "g", "h", "j", "k", "l"], ["<<<", "z", "x", "c", "v", "b", "n", "m", "Enter"]];
 
 
 let rowIndex = 0;
@@ -96,29 +95,39 @@ function failed() {
 }
 
 function startOver() {
+    disableButton(startButton);
+    if (usedNums.length == jsonLen) {
+        usedNums = [];
+        console.log("****************");
+        console.log("Words Start Over");
+        console.log("****************");
+        number = Number.parseInt(Math.random() * jsonLen);
+    }
+    while (usedNums.includes(number) == true) {
+        number = Number.parseInt(Math.random() * jsonLen);
+    }
+    usedNums.push(number);
     if (document.getElementById("showFailedBarIsOn")) {
         console.log("Start Over -- Failed")
         let failedBar = document.getElementById("showFailedBarIsOn");
         failedBar.classList.toggle("showFailedBar");
         failedBar.setAttribute("id", "failedBarContainer");
         const startButton = document.getElementById("startButton");
-        number = Number.parseInt(Math.random() * 2);
         (async () => {
             disableButton(startButton);
             startButton.innerHTML = "Loading...";
             word = await getWordAndHint(number);
-            startButton.innerHTML = "Start Over";
+            startButton.innerHTML = "New Word";
             enableButton(startButton);
         })()
     } else if (document.getElementById("board")) {
         console.log("Start Over -- Restart");
         const startButton = document.getElementById("startButton");
-        number = Number.parseInt(Math.random() * 2);
         (async () => {
             disableButton(startButton);
             startButton.innerHTML = "Loading...";
             word = await getWordAndHint(number);
-            startButton.innerHTML = "Start Over";
+            startButton.innerHTML = "New Word";
             enableButton(startButton);
         })()
     } else {
@@ -130,12 +139,11 @@ function startOver() {
         let winHidden = document.getElementById("shownWin");
         winHidden.setAttribute("id", "hiddenWin");
         const startButton = document.getElementById("startButton");
-        number = Number.parseInt(Math.random() * 2);
         (async () => {
             disableButton(startButton);
             startButton.innerHTML = "Loading...";
             word = await getWordAndHint(number);
-            startButton.innerHTML = "Start Over";
+            startButton.innerHTML = "New Word";
             enableButton(startButton);
         })()
     }
@@ -163,6 +171,7 @@ function startOver() {
     if (document.getElementsByClassName("info-tab").length != 0) {
         infoToggle();
     }
+    enableButton(startButton);
 }
 
 function win() {
@@ -261,6 +270,7 @@ const handleClick = (x) => {
         console.log("");
         let greenKeys = [];
         let yellowKeys = [];
+        let keepTrack = [];
         for (let indexWord = 0; indexWord < 4; indexWord++) {
             let wordChar = word.toLowerCase()[indexWord];
             let check = true;
@@ -288,6 +298,7 @@ const handleClick = (x) => {
                     key.classList.add("correctLocation");
                     greenCount = greenCount + 1;
                     check = false
+                    keepTrack.push(indexText);
                     break;
                 } else {
                     console.log("No! " + wordChar + " != " + text + " and/or " + indexWord + " != " + indexText + ".");
@@ -314,6 +325,7 @@ const handleClick = (x) => {
                         if (greenKeys.includes(wordChar) == false) {
                             yellowKeys.push(wordChar);
                             key.classList.add("correctChar");
+                            keepTrack.push(indexText);
                         }
                         break;
                     } else {
@@ -321,26 +333,24 @@ const handleClick = (x) => {
                         console.log("");
                     }
                 }
-            }
-        }
-        console.log("");
-        console.log("------------------------------");
-        console.log("------------------------------");
-        console.log("");
+            
         for (let indexText = 0; indexText < 4; indexText++) {
             let squareDiv = document.getElementById("box" + String(((lineIndex * 4) + indexText)));
             let text = squareDiv.textContent;
             let key = document.getElementById(text);
-            console.log("Checking if letter " + text + " in box " + indexText + " should be is gray.")
-            if (greenKeys.includes(text) == false && yellowKeys.includes(text) == false ) {
-                console.log("greenKeys: " + hasClass(squareDiv, "correctLocation") + " and yellowKeys: " + hasClass(squareDiv, "correcChar") + " should be false.");
-                console.log("Yes! The letter " + text + " in box " + indexText + " is gray.")
-                console.log("");
+            // console.log("Checking if letter " + text + " in box " + indexText + " should be is gray.")
+            if (squareDiv.classList.contains("correctChar") == false && squareDiv.classList.contains("correctLocation") == false ) {
+                // console.log("greenKeys: " + hasClass(squareDiv, "correctLocation") + " and yellowKeys: " + hasClass(squareDiv, "correcChar") + " should be false.");
+                // console.log("Yes! The letter " + text + " in box " + indexText + " is gray.")
+                // console.log("");
                 squareDiv.classList.add("incorrectChar");
+            } else if (keepTrack.includes(indexText) == false) {
                 key.classList.add("incorrectChar");
             } else {
-                console.log("No! The letter " + text + " in box " + indexText + " is not gray.")
-                console.log("");
+                // console.log("No! The letter " + text + " in box " + indexText + " is not gray.")
+                // console.log("");
+            }
+        }
             }
         }
         if (greenCount == 4) {
